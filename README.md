@@ -54,7 +54,7 @@ demonstrates:
 ## Folder Structure
 
 ```text
-taskflow-api/
+decodelabs_tasks_project3_taskflow-api/
 ├── server.js                    # Entry point: env, DB init, HTTP server, graceful shutdown
 ├── package.json
 ├── .env.example
@@ -106,8 +106,8 @@ taskflow-api/
 ## Installation
 
 ```bash
-git clone https://github.com/sanskritijain23/TaskFlow-API-Project3.git
-cd TaskFlow-API-Project3
+git clone https://github.com/sanskritijain23/decodelabs_tasks_project3_taskflow-api.git
+cd decodelabs_tasks_project3_taskflow-api
 npm install
 ```
 
