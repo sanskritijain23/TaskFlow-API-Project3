@@ -1,0 +1,100 @@
+### Health Check
+GET http://localhost:3000/api/health
+
+###
+
+### Create Task
+POST http://localhost:3000/api/v1/tasks
+Content-Type: application/json
+
+{
+  "title": "Backend Project Verification",
+  "description": "Manual testing using REST Client",
+  "priority": "high",
+  "due_date": "2026-08-15"
+}
+
+###
+
+### Get All Tasks
+GET http://localhost:3000/api/v1/tasks
+
+###
+
+### Get Tasks - Filtered + Paginated + Sorted
+GET http://localhost:3000/api/v1/tasks?status=pending&priority=high&page=1&limit=10&sortBy=due_date&order=asc
+
+###
+
+### Get Task By ID
+GET http://localhost:3000/api/v1/tasks/1
+
+###
+
+### Full Update (PUT) - all editable fields required
+PUT http://localhost:3000/api/v1/tasks/1
+Content-Type: application/json
+
+{
+  "title": "Backend Project Verification",
+  "description": "Updated successfully",
+  "status": "in_progress",
+  "priority": "medium",
+  "due_date": null,
+  "completed": false
+}
+
+###
+
+### Partial Update (PATCH)
+PATCH http://localhost:3000/api/v1/tasks/1
+Content-Type: application/json
+
+{
+  "completed": true
+}
+
+###
+
+### Delete Task
+DELETE http://localhost:3000/api/v1/tasks/1
+
+###
+
+### Invalid Body - missing title
+POST http://localhost:3000/api/v1/tasks
+Content-Type: application/json
+
+{
+  "description": "Missing title"
+}
+
+###
+
+### Invalid Body - contradictory status/completed
+POST http://localhost:3000/api/v1/tasks
+Content-Type: application/json
+
+{
+  "title": "Contradiction example",
+  "status": "pending",
+  "completed": true
+}
+
+###
+
+### Invalid ID
+GET http://localhost:3000/api/v1/tasks/abc
+
+###
+
+### Missing Resource
+GET http://localhost:3000/api/v1/tasks/999999
+
+###
+
+### Empty PATCH body (should be rejected)
+PATCH http://localhost:3000/api/v1/tasks/1
+Content-Type: application/json
+
+{}

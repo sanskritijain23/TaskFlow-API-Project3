@@ -1,0 +1,179 @@
+{
+  "info": {
+    "name": "TaskFlow-API",
+    "description": "Project 3: Database Integration - TaskFlow API endpoint collection.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000", "type": "string" },
+    { "key": "taskId", "value": "1", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/api/health", "host": ["{{baseUrl}}"], "path": ["api", "health"] }
+      }
+    },
+    {
+      "name": "Create Task",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Write project documentation\",\n  \"description\": \"Cover README, architecture, and schema docs\",\n  \"priority\": \"high\",\n  \"due_date\": \"2026-08-15\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/v1/tasks", "host": ["{{baseUrl}}"], "path": ["api", "v1", "tasks"] }
+      }
+    },
+    {
+      "name": "List Tasks",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/api/v1/tasks", "host": ["{{baseUrl}}"], "path": ["api", "v1", "tasks"] }
+      }
+    },
+    {
+      "name": "List Tasks - Filtered",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/tasks?status=pending&priority=high&completed=false",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "tasks"],
+          "query": [
+            { "key": "status", "value": "pending" },
+            { "key": "priority", "value": "high" },
+            { "key": "completed", "value": "false" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Tasks - Paginated + Sorted",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/tasks?page=1&limit=10&sortBy=due_date&order=asc",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "tasks"],
+          "query": [
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "10" },
+            { "key": "sortBy", "value": "due_date" },
+            { "key": "order", "value": "asc" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Task By ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/tasks/{{taskId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "tasks", "{{taskId}}"]
+        }
+      }
+    },
+    {
+      "name": "Full Update (PUT)",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Write project documentation\",\n  \"description\": \"Final draft\",\n  \"status\": \"in_progress\",\n  \"priority\": \"medium\",\n  \"due_date\": null,\n  \"completed\": false\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/tasks/{{taskId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "tasks", "{{taskId}}"]
+        }
+      }
+    },
+    {
+      "name": "Partial Update (PATCH)",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"completed\": true\n}" },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/tasks/{{taskId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "tasks", "{{taskId}}"]
+        }
+      }
+    },
+    {
+      "name": "Delete Task",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/tasks/{{taskId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "tasks", "{{taskId}}"]
+        }
+      }
+    },
+    {
+      "name": "Invalid - Missing Title",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"description\": \"No title provided\"\n}" },
+        "url": { "raw": "{{baseUrl}}/api/v1/tasks", "host": ["{{baseUrl}}"], "path": ["api", "v1", "tasks"] }
+      }
+    },
+    {
+      "name": "Invalid - Contradictory status/completed",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Contradiction example\",\n  \"status\": \"pending\",\n  \"completed\": true\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/v1/tasks", "host": ["{{baseUrl}}"], "path": ["api", "v1", "tasks"] }
+      }
+    },
+    {
+      "name": "Invalid - Empty PATCH Body",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{}" },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/tasks/{{taskId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "tasks", "{{taskId}}"]
+        }
+      }
+    },
+    {
+      "name": "Invalid - Non-numeric ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/tasks/not-a-number",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "tasks", "not-a-number"]
+        }
+      }
+    },
+    {
+      "name": "Invalid - Missing Task (404)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/tasks/999999",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "tasks", "999999"]
+        }
+      }
+    }
+  ]
+}
