@@ -106,8 +106,8 @@ taskflow-api/
 ## Installation
 
 ```bash
-git clone https://github.com/sanskritijain23/TaskFlow-API.git
-cd TaskFlow-API
+git clone https://github.com/sanskritijain23/TaskFlow-API-Project3.git
+cd TaskFlow-API-Project3
 npm install
 ```
 
